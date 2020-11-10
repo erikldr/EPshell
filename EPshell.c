@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<unistd.h>
 #include<string.h>
+#include <sys/wait.h>
 
 #define MAX_WORD 10
 #define MAX_CHAR 512 // tamanho maximo de entrada de caracteres
@@ -11,20 +12,22 @@ void execucao(char* args[]){
 		exit(0);
 	}
 
-    pid_t pid = fork();
+    pid_t pid, wpid;
+    int status;
 
-    if(pid == -1) {
-        perror("Algo deu errado no fork...");
-    }
+    pid = fork();
+
     if(pid == 0) {
         if(execvp(args[0], args) == -1){
             perror("Erro na execução");
-            exit(1);
         }
-    }
-
-    if(wait(0) == -1){
-        perror("Erro no wait");
+        exit(1);
+    }else if(pid == -1) {
+        perror("Algo deu errado no fork...");
+    } else {
+        do{
+            wpid = waitpid(pid, &status, WUNTRACED);
+        }while(!WIFEXITED(status) && !WIFSIGNALED(status));
     }
 }
 
