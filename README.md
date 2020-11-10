@@ -12,3 +12,6 @@ Casos de teste:
             
 Erros:
     Nenhum erro inesperado encontrado no codigo atual. Todos foram devidamente tratados ou corrigidos.
+    
+    
+    Agradecemos por esse trabalho desafiador, proposto pelo professor Rodrigo Moreira na disciplina de Sistemas Operacionais, da UFV-CRP. 
